@@ -1,0 +1,126 @@
+import mandrill
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
+html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto Destacado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        .product {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .product img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .product-info {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .product-info h2 {
+            color: #007BFF;
+        }
+        .cta {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .cta:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Presentamos nuestro Producto Destacado! - Simulador a traves de mailchimp-mandrill con python</h1>
+        <p>Estamos emocionados de ofrecerte este increíble producto diseñado para mejorar tu día a día. ¡Descubre sus características y benefíciate hoy mismo!</p>
+        
+        <div class="product">
+            <img src="https://exitocol.vtexassets.com/arquivos/ids/9154827/consola-sony-playstation-5-ps5-825gb-lector-de-disco.jpg?v=637631028231230000" alt="Producto Destacado">
+        </div>
+        
+        <div class="product-info">
+            <h2>Producto Estrella</h2>
+            <p>Este producto es ideal para mejorar tu rendimiento y productividad. Viene con las mejores características del mercado y una oferta exclusiva para ti.</p>
+        </div>
+        
+        <a href="https://tu-sitio-web.com" class="cta">¡Compra Ahora!</a>
+
+        <div class="footer">
+            <p>Si tienes alguna pregunta, no dudes en contactarnos. ¡Gracias por confiar en nosotros!</p>
+            <p>esto es enviado desde el script de python</p>
+            <p>&copy; 2024 Tu Empresa - Todos los derechos reservados</p>
+        </div>
+    </div>
+</body>
+</html>
+
+"""
+
+
+try:
+
+    mandrill_client = mandrill.Mandrill(os.getenv('API_KEY'))
+    print(os.getenv('API_KEY'))
+
+
+    message = {
+        'from_email': 'servicioalcliente@rentek.com.co',
+        'to': [{
+            'email': 'camilo.pinilla@rentek.com.co',
+            'name': 'Camilo',
+            'type': 'to'
+        }],
+        'subject': 'Asunto del correo',
+        'html': html,
+        'text': 'Hola, este es un correo transaccional en texto plano.'
+    }
+
+
+    result = mandrill_client.messages.send(message=message)
+    print(result)
+
+except mandrill.Error as e:
+
+    print(f'Ocurrió un error: {e}')

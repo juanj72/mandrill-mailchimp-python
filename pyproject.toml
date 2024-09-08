@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "mailchimp"
+version = "1"
+description = ""
+authors = ["juanj72 <juan.jara@campusucc.edu.co>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mandrill = "^1.0.60"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
